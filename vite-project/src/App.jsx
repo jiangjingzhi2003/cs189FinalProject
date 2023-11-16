@@ -1,13 +1,47 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Post from './postPage/Posts'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Link,
+} from "react-router-dom"
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function Login() {
   return (
     <>
+      <h1 className='title'>HomePage</h1>
+      <div className='LogInBox'>
+        <h2 id='emailText'>email:</h2>
+        <input type="text" className='emailBox' name='email'></input>
+        <br/>
+        <h2 id='passwordText'>password:</h2>
+        <input type="text" className='password'></input>
+        <br/>
+        
+        <Link to="/post">
+          <button className='LoginButton'>Login</button>
+        </Link>
+        
+      </div>
+    </>
+  )
+}
+const router = createBrowserRouter([
+  {
+    path:"/",
+    element: <Login/>
+  }, 
+  {
+    path:"/post",
+    element: <Post/>
+  }
+])
+
+function App() {
+  return (
+    <>
+      <RouterProvider router={router} />
     </>
   )
 }

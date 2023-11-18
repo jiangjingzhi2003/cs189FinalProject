@@ -1,8 +1,13 @@
+body {
+  background-color:azure;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: white;
 }
 
 .title {
@@ -36,4 +41,11 @@ input {
   top: 20px;
   width: 150px;
   height: 50px;
+  background-color:cornflowerblue;
+  color: white;
+}
+
+.CreateNew {
+  position: relative;
+  top: 35px;
 }

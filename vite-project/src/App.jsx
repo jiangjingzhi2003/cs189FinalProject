@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Post from './postPage/Posts'
+import NewAccount from './createAccount/NewAccount'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -22,7 +23,10 @@ function Login() {
         <Link to="/post">
           <button className='LoginButton'>Login</button>
         </Link>
-        
+        <br/>
+        <Link to="/newAccount" className='CreateNew'>
+          create new account
+        </Link>
       </div>
     </>
   )
@@ -35,6 +39,10 @@ const router = createBrowserRouter([
   {
     path:"/post",
     element: <Post/>
+  },
+  {
+    path:"/newAccount",
+    element: <NewAccount/>
   }
 ])
 

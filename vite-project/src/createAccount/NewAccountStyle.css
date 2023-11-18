@@ -1,0 +1,16 @@
+form div {
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.submit {
+    background-color: gainsboro;
+    cursor: pointer;
+    transition: 3s ease;
+    width: fit-content;
+}
+
+.submit :active {
+    background-color: deepskyblue;
+}
+

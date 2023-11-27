@@ -1,0 +1,31 @@
+.menu {
+    display: flex;
+    background-color: white;
+    width:100%;
+    align-items: center;
+    justify-content: center;
+    height: 41px;
+    position: fixed;
+    top: 0;
+    margin: auto;
+    right: 0px;
+}
+  
+.menuList li{
+    display: inline;
+    list-style: none;
+}
+
+.menuImage {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+#user {
+    left: 600px;
+}
+
+#home {
+    right: 650px;
+}

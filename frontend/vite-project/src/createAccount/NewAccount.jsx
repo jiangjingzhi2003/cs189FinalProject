@@ -1,5 +1,7 @@
 import './NewAccountStyle.css'
 import React, { useState } from 'react';
+import {auth} from "../Firebase/firebaseApp"
+import { AuthErrorCodes, createUserWithEmailAndPassword} from "firebase/auth";
 
 function confirm_password(values) {
     let error = {}
@@ -24,6 +26,7 @@ function NewAccount() {
         confirm_password:''
     });
     const[errors ,setErrors] = useState({});
+    const[error, setError] = useState(null);
 
     const handleInput = (event) => {
         setUserInfo(prev => ({...prev, [event.target.name]:[event.target.value]}))
@@ -31,8 +34,25 @@ function NewAccount() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(email)
-        setErrors(confirm_password(userInfo));
+        let email = userInfo.email.toString();
+        let password = userInfo.password.toString();
+        setErrors(confirm_password(userInfo))
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed up
+            console.log(userCredential.user);
+            // ...
+        })
+        .catch((err) => {
+            if (err.code === AuthErrorCodes.WEAK_PASSWORD) {
+            setError("The password is too weak.");
+        } else if (err.code === AuthErrorCodes.EMAIL_EXISTS) {
+            setError("The email address is already in use.");
+        } else {
+            console.log(err.code);
+            alert(err.code);
+        }
+        });
     }
 
     return (

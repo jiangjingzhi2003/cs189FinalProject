@@ -22,10 +22,22 @@
     height: 40px;
 }
 
-#user {
-    left: 600px;
+a {
+    position: absolute;
 }
 
-#home {
-    right: 650px;
+#user, #LinkUser {
+    left: 700px;
+    top: 0;
+}
+
+#home, #LinkHome{
+    right: 700px;
+    top: 0;
+}
+
+.Auth {
+    position: relative;
+    left: 600px;
+    top: 0;
 }

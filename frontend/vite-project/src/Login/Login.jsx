@@ -5,12 +5,7 @@ import {signInWithEmailAndPassword} from "firebase/auth"
 import {auth} from "../Firebase/firebaseApp"
 import { useNavigate } from 'react-router-dom'
 import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-  Router,
-  Routes,
+  Link
 } from "react-router-dom"
 
 function Login() {

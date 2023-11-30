@@ -1,9 +1,6 @@
-POST http://localhost:3000/api/addPost
+GET http://localhost:3000/api/getUserPost
 Content-Type: application/json
 
 {
-    "author": "stephen",
-    "title": "from my computer",
-    "text": "hello",
-    "likes": 1000
+    "author": "stephen"
 }

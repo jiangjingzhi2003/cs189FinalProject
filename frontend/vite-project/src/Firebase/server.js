@@ -51,6 +51,7 @@ app.post('/api/addPost', async (req, res) => {
     */
 
     try {
+        req.body.uploadDate = new Date().toLocaleString();
         const docRef = await db.collection('posts').add(req.body)
         res.status(200).send({id: docRef.id })
     } catch (error) {
@@ -67,6 +68,28 @@ app.post('/api/addPost', async (req, res) => {
 // Getting all posts (GET)
 
 // Getting a user's posts (GET)
+app.get('/api/getUserPost/', async (req, res) => {
+    
+    /*
+    Send a GET request to get a user's post
+    */
+    try {
+        const { author } = req.body;
+        const postsRef = db.collection('posts');
+        const snapshot = await postsRef.where('author', '==', author).get();
+        if (snapshot.empty) {
+            console.log("no documents");
+            return;
+        }
+        snapshot.forEach(doc => {
+            console.log(doc.id, "=>", doc.data());
+        });
+        res.status(200).send("Success");
+    } catch (error) {   
+        console.error(error);
+        res.status(500).send("no");
+    }
+})
 
 // Searching for posts (GET)
 

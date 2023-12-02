@@ -2,10 +2,12 @@ import './NewAccountStyle.css'
 import React, { useState } from 'react';
 import {auth} from "../Firebase/firebaseApp"
 import { AuthErrorCodes, createUserWithEmailAndPassword} from "firebase/auth";
+import Axios from "axios"
+import { useNavigate } from 'react-router-dom'
 
 function confirm_password(values) {
     let error = {}
-    if (values.confirm_password !== values.password) {
+    if (!values.confirm_password === values.password) {
         error.conPass="password not match";
     } else {
         error.conPass = "";
@@ -15,10 +17,7 @@ function confirm_password(values) {
 }
 
 function NewAccount() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setuserName] = useState('');
-    const [conPass, setConPass] = useState('');
+
     const [userInfo, setUserInfo] = useState({
         email:'',
         username:'',
@@ -32,26 +31,46 @@ function NewAccount() {
         setUserInfo(prev => ({...prev, [event.target.name]:[event.target.value]}))
     }
 
-    const handleSubmit = (event) => {
+    const nav = useNavigate();
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        let username = userInfo.username.toString();
         let email = userInfo.email.toString();
         let password = userInfo.password.toString();
         setErrors(confirm_password(userInfo))
+
+        let newUser = {
+            name: username,
+            password: password,
+            email: email
+        }
+        const newUserJASON = JSON.stringify(newUser);
+        //send userInfo to API
+        try {
+            await Axios.post("http://localhost:3000/api/addUser", {
+                newUser
+            })
+        }
+        catch(e){
+            console.log(newUserJASON);
+        }
+
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed up
             console.log(userCredential.user);
+            nav("/");
             // ...
         })
         .catch((err) => {
             if (err.code === AuthErrorCodes.WEAK_PASSWORD) {
-            setError("The password is too weak.");
-        } else if (err.code === AuthErrorCodes.EMAIL_EXISTS) {
-            setError("The email address is already in use.");
-        } else {
-            console.log(err.code);
-            alert(err.code);
-        }
+                setError("The password is too weak.");
+            } else if (err.code === AuthErrorCodes.EMAIL_EXISTS) {
+                setError("The email address is already in use.");
+            } else {
+                console.log(err.code);
+                alert(err.code);
+            }
         });
     }
 

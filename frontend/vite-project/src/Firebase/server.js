@@ -1,7 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const admin = require('firebase-admin')
 const port = 3000;
+
+app.use(cors());
 
 const serviceAcc = require('./credentials.json')
 admin.initializeApp({
@@ -11,6 +14,7 @@ admin.initializeApp({
 app.use(express.json());
 
 const db = admin.firestore()
+
 
 // Making new Account (POST)
 

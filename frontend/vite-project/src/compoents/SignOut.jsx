@@ -13,7 +13,7 @@ function SignOut() {
     }
 
     return (
-        <button onClick={handleSignOut}>SignOut</button>
+        <button onClick={handleSignOut}>Sign Out</button>
     )
 }
 

@@ -3,6 +3,7 @@ import Button from "./Button"
 import homeIcon from "../images/homeicon.png"
 import userProfile from "../images/userProfile.jpeg"
 import AuthDetail from "../compoents/AuthDetail";
+import SignOut from "./SignOut";
 
 function Meun() {
     return(
@@ -16,6 +17,7 @@ function Meun() {
                         <a href="/userProfile"  id={style["LinkUser"]}><img src={userProfile} className={style["menuImage"]} id={style["user"]}/></a>
                     </li>
                     <li className={style["Auth"]}><AuthDetail/></li>
+                    <li id={"signOut"}><SignOut/></li>
                 </ul>
             </div>
         </>

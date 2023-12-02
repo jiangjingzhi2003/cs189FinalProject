@@ -39,5 +39,10 @@ a {
 .Auth {
     position: relative;
     left: 600px;
-    top: 0;
+    top: 22px;
+}
+
+#signOut {
+    position: relative;
+    top: 0px;
 }

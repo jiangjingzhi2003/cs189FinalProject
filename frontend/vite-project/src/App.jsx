@@ -6,6 +6,7 @@ import LoginValidation from './Login/LoginValidation'
 import Profile from './profilePage/Profile'
 import {signInWithEmailAndPassword} from "firebase/auth"
 import {auth} from "./Firebase/firebaseApp"
+import Upload from "./UploadPage/UploadPage"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path:"/userProfile",
     element: <Profile/>
+  },
+  {
+    path:"/upload",
+    element: <Upload/>
   }
 ])
 

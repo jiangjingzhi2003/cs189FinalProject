@@ -1,0 +1,25 @@
+.body {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#content {
+    position: relative;
+    right: 160px;
+    font-size: large;
+}
+
+#titleInput {
+    width: 400px;
+}
+
+#text {
+    width: 400px;
+    height: 200px;
+}
+
+#upload {
+    width: 400px;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 10px;
+}

@@ -12,3 +12,6 @@ npm install firebase-admin
 ```
 npm install axios
 ```
+```
+npm install cors
+```

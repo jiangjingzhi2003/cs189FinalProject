@@ -1,10 +1,7 @@
 const express = require('express');
-const cors = require('cors');
 const app = express();
 const admin = require('firebase-admin')
 const port = 3000;
-
-app.use(cors());
 
 const serviceAcc = require('./credentials.json')
 admin.initializeApp({
@@ -15,9 +12,7 @@ app.use(express.json());
 
 const db = admin.firestore()
 
-
 // Making new Account (POST)
-
 app.post('/api/addUser', async (req, res) => {
 
     /*
@@ -49,7 +44,7 @@ app.post('/api/addPost', async (req, res) => {
         "author": "",
         "title": "",
         "body": "",
-        "likes": ""
+        "likes": 0
     }
     May add more in future.
     */
@@ -67,15 +62,41 @@ app.post('/api/addPost', async (req, res) => {
 
 // Deleting Account (DELETE)
 
-// Deleting Post (DELETE)
+// Deleting Post (DELETE)   
 
-// Getting all posts (GET)
+// Getting User data (GET)
+app.get('/api/getUserData/', async (req, res) => {
+
+    try {
+        const { user } = req.body;
+        const userRef = db.collection('users');
+        const snapshot = await userRef.where('name', '==', user).get();
+
+        if (snapshot.empty) {
+            res.status(500).send("No user found");
+        }
+
+        let userData;
+        snapshot.forEach(doc => {
+            userData = doc.data();
+        });    
+        res.status(200).send(userData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error from Express")
+    }
+})
+
 
 // Getting a user's posts (GET)
 app.get('/api/getUserPost/', async (req, res) => {
     
     /*
-    Send a GET request to get a user's post
+    Send a GET request to get a user's post in the form of 
+
+    {
+        "author": name of author to look up
+    }
     */
     try {
         const { author } = req.body;
@@ -85,10 +106,11 @@ app.get('/api/getUserPost/', async (req, res) => {
             console.log("no documents");
             return;
         }
+        const posts = [];
         snapshot.forEach(doc => {
-            console.log(doc.id, "=>", doc.data());
+            posts.push(doc.data());
         });
-        res.status(200).send("Success");
+        res.status(200).send(posts);
     } catch (error) {   
         console.error(error);
         res.status(500).send("no");
@@ -97,7 +119,10 @@ app.get('/api/getUserPost/', async (req, res) => {
 
 // Searching for posts (GET)
 
-// 
+
+
+// Getting random post (GET)
+
 
 
 app.listen(port, () => {

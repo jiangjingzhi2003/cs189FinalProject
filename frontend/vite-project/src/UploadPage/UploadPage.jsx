@@ -15,16 +15,12 @@ function Upload() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        let postInfo = {
-            auhor : user.uid,
-            likes : 0,
-            text:text,
-            title: title
-        }
-
         try {
             await Axios.post("http://localhost:3000/api/addPost", {
-                postInfo
+                auhor : user.uid,
+                likes : 0,
+                text:text,
+                title: title
             })
         }
         catch(e){

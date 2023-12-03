@@ -39,16 +39,12 @@ function NewAccount() {
         let password = userInfo.password.toString();
         setErrors(confirm_password(userInfo))
 
-        let newUser = {
-            name: username,
-            password: password,
-            email: email
-        }
-        const newUserJASON = JSON.stringify(newUser);
         //send userInfo to API
         try {
             await Axios.post("http://localhost:3000/api/addUser", {
-                newUser
+                name: username,
+                password: password,
+                email: email
             })
         }
         catch(e){

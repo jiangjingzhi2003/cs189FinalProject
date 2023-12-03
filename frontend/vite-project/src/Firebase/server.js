@@ -1,16 +1,23 @@
 const express = require('express');
 const app = express();
-const admin = require('firebase-admin')
-const port = 3000;
+const admin = require('firebase-admin');
+const port = process.env.PORT || 3000;
 
-const serviceAcc = require('./credentials.json')
+const serviceAcc = require('./credentials.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAcc),
 })
 
 app.use(express.json());
 
-const db = admin.firestore()
+const db = admin.firestore();
+
+const {v4} = require('uuid');
+
+app.get('/api', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+});
 
 // Making new Account (POST)
 app.post('/api/addUser', async (req, res) => {
@@ -26,11 +33,11 @@ app.post('/api/addUser', async (req, res) => {
     */
 
     try {
-        const docRef = await db.collection('users').add(req.body)
-        res.status(200).send({id: docRef.id })
+        const docRef = await db.collection('users').add(req.body);
+        res.status(200).send({id: docRef.id });
     } catch (error) {
-        console.error(error)
-        res.status(500).send("Internal Server Error")
+        console.error(error);
+        res.status(500).send("Internal Server Error");
     }
 
 })
@@ -51,11 +58,11 @@ app.post('/api/addPost', async (req, res) => {
 
     try {
         req.body.uploadDate = new Date().toLocaleString();
-        const docRef = await db.collection('posts').add(req.body)
-        res.status(200).send({id: docRef.id })
+        const docRef = await db.collection('posts').add(req.body);
+        res.status(200).send({id: docRef.id });
     } catch (error) {
-        console.error(error)
-        res.status(500).send("Internal Server Error")
+        console.error(error);
+        res.status(500).send("Internal Server Error");
     }
 
 })  
@@ -65,15 +72,14 @@ app.post('/api/addPost', async (req, res) => {
 // Deleting Post (DELETE)   
 
 // Getting User data (GET)
-app.get('/api/getUserData/', async (req, res) => {
+app.get('/api/getUserData/:user', async (req, res) => {
 
     try {
-        const { user } = req.body;
+        const user  = req.params.user;
         const userRef = db.collection('users');
         const snapshot = await userRef.where('name', '==', user).get();
-
         if (snapshot.empty) {
-            res.status(500).send("No user found");
+            res.status(400).send("User not found");
         }
 
         let userData;
@@ -83,27 +89,24 @@ app.get('/api/getUserData/', async (req, res) => {
         res.status(200).send(userData);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error from Express")
+        res.status(500).send("Internal Server Error from Express");
     }
 })
 
 
 // Getting a user's posts (GET)
-app.get('/api/getUserPost/', async (req, res) => {
+app.get('/api/getUserPost/:user', async (req, res) => {
     
     /*
-    Send a GET request to get a user's post in the form of 
-
-    {
-        "author": name of author to look up
-    }
+    Send a GET request to get a user's post 
     */
     try {
-        const { author } = req.body;
+        const author = req.params.user;
         const postsRef = db.collection('posts');
         const snapshot = await postsRef.where('author', '==', author).get();
         if (snapshot.empty) {
             console.log("no documents");
+            res.status(400).send("User not found")
             return;
         }
         const posts = [];
@@ -113,12 +116,18 @@ app.get('/api/getUserPost/', async (req, res) => {
         res.status(200).send(posts);
     } catch (error) {   
         console.error(error);
-        res.status(500).send("no");
+        res.status(500).send("Internal Server Error from Express");
     }
 })
 
-// Searching for posts (GET)
+app.get('/api/test', async (req, res) => {
 
+    console.log("Testing");
+    res.status(200).send({
+        "status": 200,
+        "message": "Test successful"
+    })
+})
 
 
 // Getting random post (GET)
@@ -149,6 +158,7 @@ app.get('/api/getRandomPost', async (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
   });
-  
+
+module.exports = app;

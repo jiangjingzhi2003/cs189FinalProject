@@ -124,8 +124,30 @@ app.get('/api/getUserPost/', async (req, res) => {
 
 
 // Getting random post (GET)
+app.get('/api/getRandomPost', async (req, res) => {
 
+    /*
+    * Randomly gets 5 posts from the database
+    */
 
+    try {
+        const postsRef = await db.collection('posts').get();
+        let random;
+        let doc;
+        const posts = [];
+        let numPosts = postsRef.docs.length;
+        for (let i = 0; i < 5; i++) {
+            random = Math.floor(Math.random() * (numPosts + 1));
+            doc = postsRef.docs[random];
+            posts.push(doc.data());
+        }
+        res.status(200).send(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error from Express");
+    }
+
+})
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

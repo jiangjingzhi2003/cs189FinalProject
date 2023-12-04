@@ -45,6 +45,7 @@ function NewAccount() {
             email: email
         }
         //send userInfo to API
+        const url = 'https://full-stack-backend-api.onrender.com/api/addUser';
         try {
             await Axios.post("https://full-stack-backend-api.onrender.com/api/addUser", {
                 name: username,

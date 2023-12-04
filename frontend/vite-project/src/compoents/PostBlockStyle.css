@@ -1,0 +1,27 @@
+.post {
+    display: flex !important;
+    flex-direction: row;
+    position: relative;
+    top: 50px;
+    margin: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    justify-content: left;
+    border-color: black;
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin: 0px;
+}
+
+.title {
+    width: 70px;
+}
+.author {
+    position: relative;
+    display: flex;
+    margin-left: 10px;
+}
+

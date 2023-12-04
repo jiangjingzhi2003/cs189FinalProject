@@ -16,8 +16,8 @@ function Upload() {
         event.preventDefault();
 
         try {
-            await Axios.post("http://localhost:3000/api/addPost", {
-                auhor : user.uid,
+            await Axios.post("https://full-stack-backend-api.onrender.com/api/addPost", {
+                author : user.uid,
                 likes : 0,
                 text:text,
                 title: title

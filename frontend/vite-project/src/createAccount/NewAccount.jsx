@@ -39,16 +39,21 @@ function NewAccount() {
         let password = userInfo.password.toString();
         setErrors(confirm_password(userInfo))
 
+        let newUser = {
+            name: username,
+            password: password,
+            email: email
+        }
         //send userInfo to API
         try {
-            await Axios.post("http://localhost:3000/api/addUser", {
+            await Axios.post("https://full-stack-backend-api.onrender.com/api/addUser", {
                 name: username,
                 password: password,
                 email: email
             })
         }
         catch(e){
-            console.log(newUserJASON);
+            console.log(newUser);
         }
 
         createUserWithEmailAndPassword(auth, email, password)

@@ -46,10 +46,17 @@ function NewAccount() {
         }
         const newUserJASON = JSON.stringify(newUser);
         //send userInfo to API
+        const url = 'https://full-stack-backend-api.onrender.com/api/addUser';
         try {
-            await Axios.post("http://localhost:3000/api/addUser", {
-                newUser
-            })
+            Axios({
+                method: 'post',
+                url: url,
+                data: {
+                    "name": username,
+                    "password": password,
+                    "email": email
+                }
+            }); 
         }
         catch(e){
             console.log(newUserJASON);

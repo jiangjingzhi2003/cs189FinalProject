@@ -79,6 +79,15 @@ app.post('/api/addPost', async (req, res) => {
 // Getting User data (GET)
 app.get('/api/getUserData/:user', async (req, res) => {
 
+    /*
+    Get's a user's data in the form of a JSON
+    {
+        name
+        password
+        email
+    }
+    */
+
     try {
         const user  = req.params.user;
         const userRef = db.collection('users');
@@ -90,6 +99,7 @@ app.get('/api/getUserData/:user', async (req, res) => {
         let userData;
         snapshot.forEach(doc => {
             userData = doc.data();
+            userData["id"] = doc.id;
         });    
         res.status(200).send(userData);
     } catch (error) {
@@ -103,8 +113,17 @@ app.get('/api/getUserData/:user', async (req, res) => {
 app.get('/api/getUserPost/:user', async (req, res) => {
     
     /*
-    Send a GET request to get a user's post 
+    Send a GET request to get a user's post
+    Returns a json in the form of  
+    {
+        author
+        likes
+        text
+        title
+        uploadDate
+    }
     */
+    
     try {
         const author = req.params.user;
         const postsRef = db.collection('posts');
@@ -115,8 +134,11 @@ app.get('/api/getUserPost/:user', async (req, res) => {
             return;
         }
         const posts = [];
+        let postData;
         snapshot.forEach(doc => {
-            posts.push(doc.data());
+            postData = doc.data();
+            postData["id"] = doc.id;
+            posts.push(postData);
         });
         res.status(200).send(posts);
     } catch (error) {   
@@ -147,11 +169,14 @@ app.get('/api/getRandomPost', async (req, res) => {
         let random;
         let doc;
         const posts = [];
+        let postData;
         let numPosts = postsRef.docs.length;
         for (let i = 0; i < 5; i++) {
             random = Math.floor(Math.random() * (numPosts + 1));
             doc = postsRef.docs[random];
-            posts.push(doc.data());
+            postData = doc.data();
+            postData["id"] = doc.id;
+            posts.push(postData);
         }
         res.status(200).send(posts);
     } catch (error) {
@@ -161,6 +186,71 @@ app.get('/api/getRandomPost', async (req, res) => {
 
 })
 
+app.get('/api/getPost/:postID', async (req, res) => {
+
+    try {
+        const postsRef = db.collection('posts');
+        const doc = await postsRef.doc(req.params.postID).get();
+        if (doc.empty) {
+            res.send(400).status("No document found");
+            return
+        }
+        let postData = doc.data();
+        postData["id"] = doc.id;
+        res.status(200).send(postData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error from Express");
+    }
+})
+
+// LIKING A POST
+app.put('/api/likePost/:postID', async (req, res) => {
+
+    /*
+    Call to add 1 to a post's like count
+    */
+    try {
+        const postsRef = db.collection('posts');
+        const doc = await postsRef.doc(req.params.postID).get();
+
+        if (doc.empty) {
+            res.send(400).status("No document found");
+            return
+        }
+
+        console.log(doc);
+        let newLike = doc.data()["likes"] + 1;
+        postsRef.doc(req.params.postID).update({likes: newLike});
+
+        res.status(200).send("Success");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error from Express")
+    }
+    
+});
+
+app.put('/api/unlikePost/:postID', async (req, res) => {
+
+    try {
+        const postsRef = db.collection('posts');
+        const doc = await postsRef.doc(req.params.postID).get();
+
+        if (doc.empty) {
+            res.send(400).status("No document found");
+            return
+        }
+
+        let newLike = doc.data()["likes"] - 1;
+        postsRef.doc(req.params.postID).update({likes: newLike});
+
+        res.status(200).send("Success");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error from Express")
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

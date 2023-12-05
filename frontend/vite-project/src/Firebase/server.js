@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const admin = require('firebase-admin');
 const port = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAcc),
 })
 
+app.use(cors());
 app.use(express.json());
 
 const db = admin.firestore();
@@ -48,7 +50,7 @@ app.post('/api/addUser', async (req, res) => {
 })
 
 // Making new post (POST)
-app.post('/api/addPost', async (req, res) => {
+app.post('/api/addPost/', async (req, res) => {
 
     /*
     Posts should be in the form of 

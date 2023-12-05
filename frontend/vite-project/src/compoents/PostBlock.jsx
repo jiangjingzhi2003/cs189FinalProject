@@ -1,19 +1,20 @@
 import Axios from "axios";
+import { useEffect, useState } from "react";
+import "./PostBlockStyle.css";
+import LikeButton from "./LikeButton";
 
-function PostBlock() {
-    let postData = "";
-
-    Axios.get("http://localhost:3000/api/getUserPost" ,{
-        params: {
-            custom_data : "yucMZZ4WYWQvx5q4XpLHpdY9DV02"
-        }
-    })
-    .then((response) => {
-        postData = response.data.text;
-    })
+function PostBlock(props) {
     return (
-        <div>
-            {postData}
+        <div className="post">
+            <div className="titleAndLike">
+                <h3 className="title">{props.title}</h3>
+                <LikeButton likes={props.likes}/>
+            </div>
+
+            <div className="mainContent">
+                <p className="text">{props.text}</p>
+                <p className="author">{props.author}</p>
+            </div>
         </div>
     )
 }

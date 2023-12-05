@@ -17,7 +17,7 @@ function Meun() {
                         <a href="/userProfile"  id={style["LinkUser"]}><img src={userProfile} className={style["menuImage"]} id={style["user"]}/></a>
                     </li>
                     <li className={style["Auth"]}><AuthDetail/></li>
-                    <li id={"signOut"}><SignOut/></li>
+                    <li id={style["signOut"]}><SignOut/></li>
                 </ul>
             </div>
         </>

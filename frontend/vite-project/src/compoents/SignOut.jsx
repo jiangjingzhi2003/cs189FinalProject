@@ -1,6 +1,7 @@
 import {signOut } from "firebase/auth";
 import {auth} from "../Firebase/firebaseApp"
 import { useNavigate } from 'react-router-dom'
+import "./SignOutStyle.css"
 
 function SignOut() {
 
@@ -13,7 +14,7 @@ function SignOut() {
     }
 
     return (
-        <button onClick={handleSignOut}>Sign Out</button>
+        <button onClick={handleSignOut} id="signOut">Sign Out</button>
     )
 }
 

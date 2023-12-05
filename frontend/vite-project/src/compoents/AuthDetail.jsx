@@ -1,6 +1,9 @@
 import { onAuthStateChanged } from "firebase/auth";
 import React, {useEffect, useState } from "react";
 import {auth} from "../Firebase/firebaseApp"
+import {
+    Link,
+  } from "react-router-dom"
 
 function AuthDetail() {
     const [authUser, setAuthUser] = useState(null);
@@ -20,7 +23,7 @@ function AuthDetail() {
     return (
         <>
             <div>
-                {authUser ? <>Signed In</> : <>Sign Out</>}
+                {authUser ? <Link>Signed In</Link> : <Link to="/">Login</Link>}
             </div>
         </>
     )

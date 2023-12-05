@@ -9,6 +9,7 @@
     top: 0;
     margin: auto;
     right: 0px;
+
 }
   
 .menuList li{
@@ -39,10 +40,11 @@ a {
 .Auth {
     position: relative;
     left: 600px;
-    top: 22px;
+    top: 1px;
+    margin-right: 5px;
 }
 
 #signOut {
     position: relative;
-    top: 0px;
+    right: 600px;
 }

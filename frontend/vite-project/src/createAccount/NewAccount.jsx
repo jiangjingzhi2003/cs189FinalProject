@@ -44,22 +44,17 @@ function NewAccount() {
             password: password,
             email: email
         }
-        const newUserJASON = JSON.stringify(newUser);
         //send userInfo to API
         const url = 'https://full-stack-backend-api.onrender.com/api/addUser';
         try {
-            Axios({
-                method: 'post',
-                url: url,
-                data: {
-                    "name": username,
-                    "password": password,
-                    "email": email
-                }
-            }); 
+            await Axios.post("https://full-stack-backend-api.onrender.com/api/addUser", {
+                name: username,
+                password: password,
+                email: email
+            })
         }
         catch(e){
-            console.log(newUserJASON);
+            console.log(newUser);
         }
 
         createUserWithEmailAndPassword(auth, email, password)

@@ -5,7 +5,6 @@ import Axios from "axios";
 
 function Blog() {
     const [posts, setPosts] = useState([])
-    let uniquePost;
 
     useEffect(() => {
         Axios.get("https://full-stack-backend-api.onrender.com/api/getRandomPost")
@@ -22,11 +21,20 @@ function Blog() {
             <div className={style["blog"]}>
                 {   
                     posts.map((data) => {
-                    return (
-                        <div key={data.toString()}>
-                            <PostBlock title={data.title} text={data.text} author={data.author} likes={parseInt(data.likes)}/>
-                        </div>
-                    );
+                        let curr = posts.indexOf(data);
+                        console.log(curr);
+                        for(let i=curr; i< 5;i++) {
+                            if (posts[i].id == data.id && i != curr) {
+                                return(
+                                    <></>
+                                )
+                            }
+                        }
+                        return (
+                            <div key={data.id}>
+                                <PostBlock title={data.title} text={data.text} author={data.author} likes={parseInt(data.likes)} id ={data.id}/>
+                            </div>
+                        );
                 })}
             </div>
         </>

@@ -9,7 +9,7 @@ function SignOut() {
     const handleSignOut = (event) => {
         signOut(auth)
         .then (()=> {
-            nav('/')
+            nav('/login')
         })
     }
 

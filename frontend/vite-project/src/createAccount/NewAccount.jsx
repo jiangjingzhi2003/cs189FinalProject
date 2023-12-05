@@ -61,7 +61,7 @@ function NewAccount() {
         .then((userCredential) => {
             // Signed up
             console.log(userCredential.user);
-            nav("/");
+            nav("/login");
             // ...
         })
         .catch((err) => {

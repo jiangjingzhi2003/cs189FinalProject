@@ -8,7 +8,7 @@ function PostBlock(props) {
         <div className="post">
             <div className="titleAndLike">
                 <h3 className="title">{props.title}</h3>
-                <LikeButton likes={props.likes}/>
+                <LikeButton likes={props.likes} id = {props.id}/>
             </div>
 
             <div className="mainContent">

@@ -23,7 +23,7 @@ function AuthDetail() {
     return (
         <>
             <div>
-                {authUser ? <Link>Signed In</Link> : <Link to="/">Login</Link>}
+                {authUser ? <Link>Signed In</Link> : <Link to="/login">Login</Link>}
             </div>
         </>
     )

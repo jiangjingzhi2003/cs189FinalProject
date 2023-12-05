@@ -29,7 +29,7 @@ function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential)=> {
         console.log(userCredential);
-        nav("/post")
+        nav("/")
       }).catch((error)=> {
         console.log(error);
     })

@@ -3,7 +3,6 @@ const cors = require('cors');
 const app = express();
 const admin = require('firebase-admin');
 const port = process.env.PORT || 3000;
-const cors = require('cors');
 
 app.use(cors({
     origin: "*"
@@ -103,6 +102,28 @@ app.get('/api/getUserData/:user', async (req, res) => {
             userData = doc.data();
             userData["id"] = doc.id;
         });    
+        res.status(200).send(userData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error from Express");
+    }
+})
+
+app.get('/api/getUserDataByEmail/:email', async (req, res) => {
+
+    try {
+        const email  = req.params.email;
+        const userRef = db.collection('users');
+        const snapshot = await userRef.where('email', '==', email).get();
+        if (snapshot.empty) {
+            res.status(400).send("User not found");
+        }
+
+        let userData;
+        snapshot.forEach(doc => {
+            userData = doc.data();
+            userData["id"] = doc.id;
+        }); 
         res.status(200).send(userData);
     } catch (error) {
         console.error(error);

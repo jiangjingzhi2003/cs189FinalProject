@@ -1,9 +1,10 @@
 import style from "./Menu.module.css"
 import Button from "./Button"
 import homeIcon from "../images/homeicon.png"
-import userProfile from "../images/userProfile.jpeg"
+import userProfile from "../images/userProfile.png"
 import AuthDetail from "../compoents/AuthDetail";
 import SignOut from "./SignOut";
+import RefreshButton from "../compoents/RefreshButton";
 
 function Meun() {
     return(
@@ -18,6 +19,7 @@ function Meun() {
                     </li>
                     <li className={style["Auth"]}><AuthDetail/></li>
                     <li id={style["signOut"]}><SignOut/></li>
+                    <li id={style["Refresh"]}><RefreshButton/></li>
                 </ul>
             </div>
         </>

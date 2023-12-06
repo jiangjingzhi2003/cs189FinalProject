@@ -1,6 +1,6 @@
 .menu {
     display: flex;
-    background-color: white;
+    background-color: transparent;
     width:100%;
     align-items: center;
     justify-content: center;
@@ -9,7 +9,7 @@
     top: 0;
     margin: auto;
     right: 0px;
-
+    z-index: 1;
 }
   
 .menuList li{
@@ -47,4 +47,9 @@ a {
 #signOut {
     position: relative;
     right: 600px;
+}
+
+#Refresh {
+    position: absolute;
+    left: 200px;
 }

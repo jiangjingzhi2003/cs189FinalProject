@@ -16,7 +16,6 @@ function AuthDetail() {
                 setAuthUser(null);
             }
         })
-
         return listen;
     }, [])
 

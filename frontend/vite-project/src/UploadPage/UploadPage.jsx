@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./UploadStyle.css"
 import Axios from "axios";
 import {auth} from "../Firebase/firebaseApp"
 import Meun from "../compoents/Meun";
+import { onAuthStateChanged } from "firebase/auth";
 
 
 
@@ -10,6 +11,18 @@ function Upload() {
     const [text, setText] = useState('');
     const [title, setTitle] = useState('');
     const user = auth.currentUser; //get current user
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setEmail(user.email);
+            } else {
+                setEmail('');
+            }
+        })
+    }, [])
 
 
     const handleSubmit = async (event) => {
@@ -20,7 +33,8 @@ function Upload() {
                 author : user.uid,
                 likes : 0,
                 text:text,
-                title: title
+                title: title,
+                email:email,
             })
         }
         catch(e){

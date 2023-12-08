@@ -32,7 +32,7 @@ function Blog() {
                         }
                         return (
                             <div key={data.id}>
-                                <PostBlock title={data.title} text={data.text} author={data.author} likes={parseInt(data.likes)} id ={data.id}/>
+                                <PostBlock title={data.title} text={data.text} author={data.email} likes={parseInt(data.likes)} id ={data.id}/>
                             </div>
                         );
                 })}

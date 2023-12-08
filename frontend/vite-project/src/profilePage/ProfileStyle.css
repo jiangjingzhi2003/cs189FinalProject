@@ -149,3 +149,10 @@
     position: absolute;
     font-size: larger;
 }
+
+.uploadButton {
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    right: 150px;
+}
